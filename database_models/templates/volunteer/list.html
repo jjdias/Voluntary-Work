@@ -4,7 +4,7 @@
 	{% for volunteer in object_list %}
 		<h5>{{ volunteer.id }}
 			<a href="/volunteer/{{volunteer.id}}">
-				{{ volunteer.name }}
+				{{ volunteer.first_name }}
 			</a>
 		</h5>
 	{% endfor %}

@@ -1,8 +1,10 @@
 {% extends "main/header.html" %}
 
 {% block content %}
-		<h3> {{volunteer.name}} </h3>
+		<h3> {{volunteer.first_name}} </h3>
+		<h3> {{volunteer.last_name}} </h3>
 		<h6>on {{volunteer.phone_number}}</h6>
 		<h6>on {{volunteer.date_birth}}</h6>
 		<h6>on {{volunteer.email}}</h6>
+		<h6>on {{volunteer.course}}</h6>
 {% endblock %}
