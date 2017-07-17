@@ -5,6 +5,9 @@ from django.core.validators import RegexValidator
 
 # Create your models here.
 
+
+# This is the first part.
+
 # I'm developing this for, mostly, Algarve University. That will explain some of the model choices.
 class University(models.Model):
     name = models.CharField(max_length=140)
@@ -62,6 +65,36 @@ class Volunteer(models.Model):
     def __str__(self):
         # return self.name
         return "%s, %s" % (self.last_name, self.first_name)
+
+
+# Second part
+
+# A project can have multiple dates and vise-versa.
+class Date_Project(models.Model):
+    # This would be the ideal but I'm not sure on how to do it.
+    # date_begins = models.DateTimeField()
+    # date_ends = models.DateTimeField()
+    # TODO fix the beginning and ending of projects
+
+    date_begins = models.DateTimeField()
+
+    # TODO make the other way around on the project date thing.
+    # project = models.ManyToManyField(Project)
+    # project = models.ForeignKey('models.Project')
+
+    def __str__(self):
+        return str(self.date_begins)
+
+class Project(models.Model):
+    name = models.CharField(max_length=140)
+    address = models.CharField(max_length=140)
+    description = models.TextField()
+
+    date_project_begins = models.ManyToManyField(Date_Project)
+
+    def __str__(self):
+        return self.name
+
 
 
 # Phone verification: https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-phone-number-in-django-models
