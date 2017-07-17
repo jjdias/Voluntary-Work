@@ -1,0 +1,13 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+		<h3> {{post.title}} </h3>
+		<h6>on {{post.date}}</h6>
+		{{post.body|safe|linebreaks}}
+<!--
+The "safe" tag added to the "post.body" makes it so that whenever the page reades a text with HTML elements, it will translate them.
+So a the reader will see a bold word instead of <strog>word</strong>.
+
+The "linebreaks" tags does more of the same of "safe" but for line breaks.
+-->
+{% endblock %}
