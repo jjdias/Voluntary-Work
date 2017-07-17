@@ -1,9 +1,9 @@
 {% extends "main/header.html" %}
 
 {% block content %}
-	{% for post in object_list %}
-		<h5>{{ volunteer.date_birth|date:"d-m-Y" }}
-			<a href="/volunteer/{{post.id}}">
+	{% for volunteer in object_list %}
+		<h5>{{ volunteer.id }}
+			<a href="/volunteer/{{volunteer.id}}">
 				{{ volunteer.name }}
 			</a>
 		</h5>
