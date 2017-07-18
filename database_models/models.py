@@ -62,6 +62,9 @@ class Volunteer(models.Model):
     # Now there is a problem here. Employee can be volunteers and no have a course. Not sure whats teh best solution yet.
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
 
+    # Conecting with the projects.
+    projects_participating = models.ManyToManyField('Project')
+
     def __str__(self):
         # return self.name
         return "%s, %s" % (self.last_name, self.first_name)
@@ -78,6 +81,10 @@ class Date_Project(models.Model):
 
     date_begins = models.DateTimeField()
 
+    # We are making a "reverse query" here. There are links at the end to help.
+    # TODO not sure if this is the right way to associate dates and projects.
+    projects_name = models.ManyToManyField('Project')
+
     # TODO make the other way around on the project date thing.
     # project = models.ManyToManyField(Project)
     # project = models.ForeignKey('models.Project')
@@ -92,9 +99,16 @@ class Project(models.Model):
 
     date_project_begins = models.ManyToManyField(Date_Project)
 
+    # Conecting with the volunteers.
+    volunteers_participating = models.ManyToManyField(Volunteer)
+
+
     def __str__(self):
         return self.name
 
 
 
 # Phone verification: https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-phone-number-in-django-models
+# Reverse Query: https://stackoverflow.com/questions/7298326/django-models-mutual-references-between-two-classes-and-impossibility-to-use-fo
+#                https://stackoverflow.com/questions/34003865/django-reverse-query-name-clash
+#                https://docs.djangoproject.com/en/1.8/ref/models/fields/#foreignkey
