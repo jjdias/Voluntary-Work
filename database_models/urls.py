@@ -1,7 +1,8 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.views.generic import ListView, DetailView
 from database_models.models import Volunteer
 
+# The "object" reference will give a warning. But it's fine.
 urlpatterns = [
     url(r'^volunteer/$', ListView.as_view(queryset=Volunteer.objects.all().order_by("-first_name")[:25],
                                           template_name="volunteer/list.html")),
@@ -9,7 +10,7 @@ urlpatterns = [
                                              template_name='volunteer/volunteer.html')),
 
     url(r'^project/$', ListView.as_view(queryset=Volunteer.objects.all().order_by("-first_name")[:25],
-                                          template_name="volunteer/list.html")),
+                                        template_name="volunteer/list.html")),
     url(r'^(?P<pk>\d+)$', DetailView.as_view(model=Volunteer,
                                              template_name='volunteer/volunteer.html')),
 ]

@@ -3,6 +3,7 @@ from django.db import models
 # Phone validator. Link at the end.
 from django.core.validators import RegexValidator
 
+
 # Create your models here.
 
 
@@ -15,6 +16,7 @@ class University(models.Model):
     def __str__(self):
         return self.name
 
+
 # Since this is being developed for a university we will have a campus class.
 # A university may have multiple campus but I'm going with the idea that a campus has only one university.
 class Campus(models.Model):
@@ -25,9 +27,10 @@ class Campus(models.Model):
     def __str__(self):
         return self.name
 
+
 # A campus has multiple fields of sutdy while another campus, from the same university, has other field.
 # I think it's a bit redundant but thats how they do it in there.
-class Field_of_study(models.Model):  # Or "Unidade Organica"
+class FieldOfStudy(models.Model):  # Or "Unidade Organica"
     name = models.CharField(max_length=140)
     abbreviation = models.CharField(max_length=5)
     campus = models.ForeignKey(Campus, on_delete=models.CASCADE)
@@ -36,15 +39,17 @@ class Field_of_study(models.Model):  # Or "Unidade Organica"
         return self.name
         # return "%s, %s" % (self.abbreviation, self.name)
 
+
 # And a course. The fruit on a, not entirely sure why, long tree.
 class Course(models.Model):
     name = models.CharField(max_length=140)
     abbreviation = models.CharField(max_length=5)
-    field_of_study = models.ForeignKey(Field_of_study, on_delete=models.CASCADE)
+    field_of_study = models.ForeignKey(FieldOfStudy, on_delete=models.CASCADE)
 
     def __str__(self):
         # return self.name
         return "%s, %s" % (self.abbreviation, self.name)
+
 
 # An finally the volunteer.
 class Volunteer(models.Model):
@@ -55,11 +60,13 @@ class Volunteer(models.Model):
 
     # For verifying the phone.
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+                                 message="Phone number must be entered in the format: '+999999999'. "
+                                         "Up to 15 digits allowed.")
     phone_number = models.CharField(max_length=15, validators=[phone_regex], blank=True)  # validators should be a list
 
     # TODO Should this be allowed to be NULL or not.
-    # Now there is a problem here. Employee can be volunteers and no have a course. Not sure whats teh best solution yet.
+    # Now there is a problem here. Employee can be volunteers and no have a course.
+    # Not sure whats teh best solution yet.
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
 
     # Conecting with the projects.
@@ -73,7 +80,7 @@ class Volunteer(models.Model):
 # Second part
 
 # A project can have multiple dates and vise-versa.
-class Date_Project(models.Model):
+class DateProject(models.Model):
     # This would be the ideal but I'm not sure on how to do it.
     # date_begins = models.DateTimeField()
     # date_ends = models.DateTimeField()
@@ -92,23 +99,44 @@ class Date_Project(models.Model):
     def __str__(self):
         return str(self.date_begins)
 
+
 class Project(models.Model):
     name = models.CharField(max_length=140)
     address = models.CharField(max_length=140)
     description = models.TextField()
 
-    date_project_begins = models.ManyToManyField(Date_Project)
+    date_project_begins = models.ManyToManyField(DateProject)
 
     # Conecting with the volunteers.
     volunteers_participating = models.ManyToManyField(Volunteer)
-
+    # Conecting with the institution.
+    institution_benefited = models.ForeignKey('BenefitedInstitution')
 
     def __str__(self):
         return self.name
 
 
+class BenefitedInstitution(models.Model):
+    name = models.CharField(max_length=140)
+    address = models.CharField(max_length=140)
+    representative_name = models.CharField(max_length=100)
+    area_of_work = models.CharField(max_length=140)
 
-# Phone verification: https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-phone-number-in-django-models
-# Reverse Query: https://stackoverflow.com/questions/7298326/django-models-mutual-references-between-two-classes-and-impossibility-to-use-fo
-#                https://stackoverflow.com/questions/34003865/django-reverse-query-name-clash
-#                https://docs.djangoproject.com/en/1.8/ref/models/fields/#foreignkey
+    contact = models.ForeignKey('ContactInstitution')
+
+
+class ContactInstitution(models.Model):
+    name = models.CharField(max_length=140)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+999999999'. "
+                                         "Up to 15 digits allowed.")
+    phone_number = models.CharField(max_length=15, validators=[phone_regex], blank=True)
+
+# Reference
+# Phone verification:
+#   https://stackoverflow.com/questions/19130942/whats-the-best-way-to-store-phone-number-in-django-models
+#
+# Reverse Query:
+#   https://stackoverflow.com/a/7298386
+#   https://stackoverflow.com/questions/34003865/django-reverse-query-name-clash
+#   https://docs.djangoproject.com/en/1.8/ref/models/fields/#foreignkey
