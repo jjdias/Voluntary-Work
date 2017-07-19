@@ -1,0 +1,11 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+	{% for benefited in object_list %}
+		<h5>{{ benefited.id }}
+			<a href="/list/benefited/{{benefited.id}}">
+				{{ benefited.name }}
+			</a>
+		</h5>
+	{% endfor %}
+{% endblock %}

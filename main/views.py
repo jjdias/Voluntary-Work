@@ -8,5 +8,5 @@ def index(request):
     return render(request, 'main/home.html')
 
 
-def contato(request):
-    return render(request, 'main/contato.html')
+def contact(request):
+    return render(request, 'main/contact.html')

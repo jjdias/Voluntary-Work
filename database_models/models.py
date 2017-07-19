@@ -108,6 +108,7 @@ class Project(models.Model):
     date_project_begins = models.ManyToManyField(DateProject)
 
     # Conecting with the volunteers.
+    # TODO Null=True not needed?
     volunteers_participating = models.ManyToManyField(Volunteer)
     # Conecting with the institution.
     institution_benefited = models.ForeignKey('BenefitedInstitution')

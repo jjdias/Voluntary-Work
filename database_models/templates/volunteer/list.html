@@ -3,7 +3,7 @@
 {% block content %}
 	{% for volunteer in object_list %}
 		<h5>{{ volunteer.id }}
-			<a href="/volunteer/{{volunteer.id}}">
+			<a href="/list/volunteer/{{volunteer.id}}">
 				{{ volunteer.first_name }}
 			</a>
 		</h5>
