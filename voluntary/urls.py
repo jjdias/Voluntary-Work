@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('main.urls')),
     url(r'^news/', include('news.urls')),
+    url(r'^list/', include('database_models.urls')),
 ]

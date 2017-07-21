@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.views.generic import ListView, DetailView
 from news.models import Post
 
@@ -9,7 +9,7 @@ urlpatterns = [
     # Making the individual post pages
     url(r'^(?P<pk>\d+)$', DetailView.as_view(model=Post,
                                     template_name='news/post.html')),
-# P > Named capturing Group. https://docs.djangoproject.com/en/1.11/topics/http/urls/#named-groups
+    # P > Named capturing Group. https://docs.djangoproject.com/en/1.11/topics/http/urls/#named-groups
     # The <pk> is seting the "Primary /key"
     # "d" Digit. "+" matches one or more digits.
     # This way the URL will be something like "news/"Int Number/".
