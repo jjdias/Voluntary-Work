@@ -1,0 +1,16 @@
+{% extends "home/header.html" %}
+
+{% block title_name %}Benefited Instetutions{% endblock %}
+
+{% block nav_benefited %}active{% endblock %}
+
+{% block content %}
+<h3><a href="/list/benefited/new_benefited/">New benefited</a></h3>
+	{% for benefited in object_list %}
+		<h5>{{ benefited.id }}
+			<a href="/list/benefited_list/{{benefited.id}}">
+				{{ benefited.name }}
+			</a>
+		</h5>
+	{% endfor %}
+{% endblock %}

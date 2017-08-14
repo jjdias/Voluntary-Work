@@ -1,0 +1,16 @@
+{% extends "home/header.html" %}
+
+{% block title_name %}Projects{% endblock %}
+
+{% block nav_project %}active{% endblock %}
+
+{% block content %}
+<h3><a href="/list/project/new_project/">New project</a></h3>
+	{% for project in object_list %}
+		<h5>{{ project.id }}
+			<a href="/list/project_list/{{project.id}}">
+				{{ project.name }}
+			</a>
+		</h5>
+	{% endfor %}
+{% endblock %}

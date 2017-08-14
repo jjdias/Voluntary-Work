@@ -1,0 +1,13 @@
+{% extends "home/header.html" %}
+
+{% block title_name %}Volunteer{% endblock %}
+
+{% block nav_volunteer %}active{% endblock %}
+
+{% block content %}
+    <h1>New Volunteer</h1>
+    <form method="POST"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Publish</button>
+    </form>
+{% endblock %}

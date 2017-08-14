@@ -1,0 +1,13 @@
+{% extends "home/header.html" %}
+
+{% block title_name %}Benefited Instetutions{% endblock %}
+
+{% block nav_benefited %}active{% endblock %}
+
+{% block content %}
+		<h3> {{benefited.name}} 				</h3>
+		<h6> {{benefited.address}} 				</h6>
+		<h6> {{benefited.representative_name}}	</h6>
+		<h6> {{benefited.area_of_work}}			</h6>
+		<h6> {{benefited.contact}}				</h6>
+{% endblock %}
